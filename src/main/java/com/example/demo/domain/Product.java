@@ -9,12 +9,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- *
- *
- *
- *
- */
+//rackets, strings, grips, balls, shoes
 @Entity
 @Table(name="Products")
 @ValidProductPrice
