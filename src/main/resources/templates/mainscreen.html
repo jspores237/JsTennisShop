@@ -17,6 +17,29 @@
 <div>
     <h1 class="text-center">J's Tennis Shop</h1>
     <hr>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333;
+        }
+        a, button {
+            color: #0077cc;
+        }
+        button {
+            background-color: #f8f8f8; /* Light gray background */
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px; /* Optional: rounds the corners */
+        }
+        </style>
     <h2>Accessories</h2>
     <form th:action="@{/mainscreen}">
         Filter: <input type="text" name="partkeyword" id="partkeyword" size="50" th:value="${partkeyword}" required />
@@ -86,5 +109,8 @@
         </tbody>
     </table>
 </div>
+<br><br>
+<a href="http://localhost:8080/aboutPage"><button>About Page</button></a>
+
 </body>
 </html>
