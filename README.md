@@ -26,6 +26,10 @@ F.  Add a “Buy Now” button to your product list. Your “Buy Now” button m
 •  The “Buy Now” button must be next to the buttons that update and delete products.
 •  The button should decrement the inventory of that product by one. It should not affect the inventory of any of the associated parts.
 •  Display a message that indicates the success or failure of a purchase.
+//Lines 111-113 mainscreen.html: created "Buy Now" button with POST request to "/buyProduct" URL when "Buy Now" is clicked. The hidden productID is passed to server (set by Thymeleaf using ${tempProduct.id}).
+//BuyNowController.java: Includes logic to update inventory (ex: decrement if Buy Now is clicked) and return either the /purchaseSuccess or /purchaseError URL files depending on the result of clicking "Buy Now" (files not created until next comment). This file also included methods to return a message to the user depending on the result.
+//purchaseError.html: purchase unsuccessful html.
+//purchaseSuccess.html: purchase successful html.
 
 G.  Modify the parts to track maximum and minimum inventory by doing the following:
 •  Add additional fields to the part entity for maximum and minimum inventory.
