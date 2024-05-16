@@ -54,5 +54,5 @@ H.  Add validation for between or at the maximum and minimum fields. The validat
 //Lines 33-46 EnufPartsValidator.java: for loop to iterate through and return the set of parts associated with a product. The inventory collection is checked to see if inventory decrementing by one would cause it to fall below the minimum. Default constraint violation message disabled (updated with more specific warning message about adding another product).
 
 I.  Add at least two unit tests for the maximum and minimum fields to the PartTest class in the test package.
-
+//Lines 104-137 PartTest.java: added getters and setters for minInv and maxInv.
 J.  Remove the class files for any unused validators in order to clean your code.
