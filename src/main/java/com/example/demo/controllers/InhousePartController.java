@@ -22,6 +22,12 @@ public class InhousePartController {
         if (!inhousePart.isInvValid()) {
             bindingResult.rejectValue("inv", "error.inhousePart", "Inventory must be between Minimum and Maximum values.");
         }
+        if (inhousePart.getInv() < inhousePart.getMinInv()) {
+            bindingResult.rejectValue("inv", "error.inhousePart", "Inventory must not be below the minimum value.");
+
+        } else if (inhousePart.getInv() > inhousePart.getMinInv()) {
+            bindingResult.rejectValue("inv", "error.inhousePart", "Inventory must not exceed maximum value.");
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("inhousepart", inhousePart);
             return "InhousePartForm";

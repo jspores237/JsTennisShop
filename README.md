@@ -45,13 +45,13 @@ G.  Modify the parts to track maximum and minimum inventory by doing the followi
 //Changed database file name to J'sTennisShop.db. Went to application.properties and changed database name accordingly.
 //Lines 100 & 101 Parts.java: Method to ensure inventory levels for parts are between min and max.
 //InhousePartController.java and OutsourcedPartController.java created. Controller maps and handles POST requests for creating and updating InhousePart objects. Validates inventory is between min and max values. Uses BindingResult to manage validation errors (outputs message to user if bad input). Saves valid InhousePart objects to database.
-//InhousePartForm.html: 
-//OutsourcedPartForm.html:
 
 H.  Add validation for between or at the maximum and minimum fields. The validation must include the following:
 •  Display error messages for low inventory when adding and updating parts if the inventory is less than the minimum number of parts.
 •  Display error messages for low inventory when adding and updating products lowers the part inventory below the minimum.
 •  Display error messages when adding and updating parts if the inventory is greater than the maximum.
+//Lines 25-29 InhousePartController.java and OutsourcedPartController.java: Additional error messages added if inventory is out of min-max zone.
+//Lines 33-46 EnufPartsValidator.java: for loop to iterate through and return the set of parts associated with a product. The inventory collection is checked to see if inventory decrementing by one would cause it to fall below the minimum. Default constraint violation message disabled (updated with more specific warning message about adding another product).
 
 I.  Add at least two unit tests for the maximum and minimum fields to the PartTest class in the test package.
 

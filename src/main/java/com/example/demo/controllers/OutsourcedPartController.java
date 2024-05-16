@@ -22,6 +22,12 @@ public class OutsourcedPartController {
         if (!outsourcedPart.isInvValid()) {
             bindingResult.rejectValue("inv", "error.outsourcedPart", "Inventory must be between Minimum and Maximum values.");
         }
+        if (outsourcedPart.getInv() < outsourcedPart.getMinInv()) {
+            bindingResult.rejectValue("inv", "error.outsourcedPart", "Inventory must not be below the minimum value.");
+
+        } else if (outsourcedPart.getInv() > outsourcedPart.getMinInv()) {
+            bindingResult.rejectValue("inv", "error.outsourcedPart", "Inventory must not exceed maximum value.");
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("outsourcedpart", outsourcedPart);
             return "OutsourcedPartForm";
