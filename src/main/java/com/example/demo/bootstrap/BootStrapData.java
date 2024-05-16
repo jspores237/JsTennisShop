@@ -42,6 +42,8 @@ public class BootStrapData implements CommandLineRunner {
         OutsourcedPart part1 = new OutsourcedPart();
         part1.setName("Polyester String");
         part1.setPrice(16.49);
+        part1.setMinInv(3);
+        part1.setMaxInv(50);
         part1.setInv(17);
         part1.setCompanyName("Solinco");
         outsourcedPartRepository.save(part1);
@@ -49,6 +51,8 @@ public class BootStrapData implements CommandLineRunner {
         OutsourcedPart part2 = new OutsourcedPart();
         part2.setName("Natural Gut String");
         part2.setPrice(23.99);
+        part2.setMinInv(3);
+        part2.setMaxInv(50);
         part2.setInv(12);
         part2.setCompanyName("Babolat");
         outsourcedPartRepository.save(part2);
@@ -56,6 +60,8 @@ public class BootStrapData implements CommandLineRunner {
         OutsourcedPart part3 = new OutsourcedPart();
         part3.setName("Dampener");
         part3.setPrice(4.99);
+        part3.setMinInv(10);
+        part3.setMaxInv(100);
         part3.setInv(91);
         part3.setCompanyName("Babolat");
         outsourcedPartRepository.save(part3);
@@ -63,6 +69,8 @@ public class BootStrapData implements CommandLineRunner {
         OutsourcedPart part4 = new OutsourcedPart();
         part4.setName("Pro Overgrip");
         part4.setPrice(6.49);
+        part4.setMinInv(5);
+        part4.setMaxInv(50);
         part4.setInv(19);
         part4.setCompanyName("Wilson");
         outsourcedPartRepository.save(part4);
@@ -70,6 +78,8 @@ public class BootStrapData implements CommandLineRunner {
         OutsourcedPart part5 = new OutsourcedPart();
         part5.setName("Tennis Balls 3 Pack");
         part5.setPrice(7.49);
+        part5.setMinInv(5);
+        part5.setMaxInv(75);
         part5.setInv(14);
         part5.setCompanyName("Penn");
         outsourcedPartRepository.save(part5);

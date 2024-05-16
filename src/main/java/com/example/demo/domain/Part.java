@@ -18,75 +18,96 @@ public abstract class Part implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     String name;
+
     @Min(value = 0, message = "Price value must be positive")
     double price;
+
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
+
+    @Min(value = 0, message = "Minimum inventory must be positive")
+    int minInv;
+
+    @Min(value = 0, message = "Maximum inventory must be positive")
+    int maxInv;
 
     @ManyToMany
     @JoinTable(name="product_part", joinColumns = @JoinColumn(name="part_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))
     Set<Product> products= new HashSet<>();
 
-    public Part() {
-    }
+    public Part() {}
 
-    public Part(String name, double price, int inv) {
+    public Part(String name, double price, int inv, int minInv, int maxInv) {
         this.name = name;
         this.price = price;
         this.inv = inv;
+        this.minInv = minInv;
+        this.maxInv = maxInv;
     }
-
-    public Part(long id, String name, double price, int inv) {
+    public Part(long id, String name, double price, int inv, int minInv, int maxInv) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.inv = inv;
+        this.minInv = minInv;
+        this.maxInv = maxInv;
     }
 
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public double getPrice() {
         return price;
     }
-
     public void setPrice(double price) {
         this.price = price;
     }
-
     public int getInv() {
         return inv;
     }
-
     public void setInv(int inv) {
+        if(inv < this.minInv || inv > this.maxInv) {
+            throw new IllegalArgumentException("Inventory must be between min and max values.");
+        }
         this.inv = inv;
     }
 
+    public int getMinInv() {
+        return minInv;
+    }
+    public void setMinInv(int minInv) {
+        this.minInv = minInv;
+    }
+    public int getMaxInv() {
+        return maxInv;
+    }
+    public void setMaxInv(int maxInv) {
+        this.maxInv = maxInv;
+    }
     public Set<Product> getProducts() {
         return products;
+    }
+    public boolean isInvValid() {
+        return this.inv >= this.minInv && this.inv <= this.maxInv;
     }
 
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
-
     public String toString(){
         return this.name;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

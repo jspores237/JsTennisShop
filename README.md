@@ -28,8 +28,8 @@ F.  Add a “Buy Now” button to your product list. Your “Buy Now” button m
 •  Display a message that indicates the success or failure of a purchase.
 //Lines 111-113 mainscreen.html: created "Buy Now" button with POST request to "/buyProduct" URL when "Buy Now" is clicked. The hidden productID is passed to server (set by Thymeleaf using ${tempProduct.id}).
 //BuyNowController.java: Includes logic to update inventory (ex: decrement if Buy Now is clicked) and return either the /purchaseSuccess or /purchaseError URL files depending on the result of clicking "Buy Now" (files not created until next comment). This file also included methods to return a message to the user depending on the result.
-//purchaseError.html: purchase unsuccessful html.
-//purchaseSuccess.html: purchase successful html.
+//purchaseError.html: purchase unsuccessful html template.
+//purchaseSuccess.html: purchase successful html template.
 
 G.  Modify the parts to track maximum and minimum inventory by doing the following:
 •  Add additional fields to the part entity for maximum and minimum inventory.
@@ -37,6 +37,16 @@ G.  Modify the parts to track maximum and minimum inventory by doing the followi
 •  Add to the InhousePartForm and OutsourcedPartForm forms additional text inputs for the inventory so the user can set the maximum and minimum values.
 •  Rename the file the persistent storage is saved to.
 •  Modify the code to enforce that the inventory is between or at the minimum and maximum value.
+//Lines 82-92 Part.java: Getters and setters for MinInv and MavInv (both set with 0 as minimum)
+//Lines 38-51 Part.java: Constructors with minInv and maxInv added.
+//BootStrapData.java: Adds setters for minInv and maxInv for each part (in the part initialization).
+//Lines 26 & 27 OutsourcedPartForm.html: Allows users to specify min and max inventory levels for parts.
+//Lines 26 & 27 InhousePartForm.html: Allows users to specify min and max inventory levels for parts.
+//Changed database file name to J'sTennisShop.db. Went to application.properties and changed database name accordingly.
+//Lines 100 & 101 Parts.java: Method to ensure inventory levels for parts are between min and max.
+//InhousePartController.java and OutsourcedPartController.java created. Controller maps and handles POST requests for creating and updating InhousePart objects. Validates inventory is between min and max values. Uses BindingResult to manage validation errors (outputs message to user if bad input). Saves valid InhousePart objects to database.
+//InhousePartForm.html: 
+//OutsourcedPartForm.html:
 
 H.  Add validation for between or at the maximum and minimum fields. The validation must include the following:
 •  Display error messages for low inventory when adding and updating parts if the inventory is less than the minimum number of parts.
