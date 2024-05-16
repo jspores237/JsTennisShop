@@ -5,6 +5,7 @@ import com.example.demo.domain.Product;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -41,7 +42,6 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
                 }
             }
         }
-
         // If the product is new or the parts are sufficient
         return true;
     }
