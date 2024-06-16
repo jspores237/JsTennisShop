@@ -2,37 +2,50 @@ package com.example.demo.controllers;
 
 import com.example.demo.domain.InhousePart;
 import com.example.demo.repositories.PartRepository;
+import com.example.demo.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/inhousepart")
 public class InhousePartController {
 
     @Autowired
     private PartRepository partRepository;
+    private PartService partService;
 
-    @PostMapping("/save")
-    public String saveInhousePart(@Valid InhousePart inhousePart, BindingResult bindingResult, Model model) {
-        if (!inhousePart.isInvValid()) {
-            bindingResult.rejectValue("inv", "error.inhousePart", "Inventory must be between Minimum and Maximum values.");
-        }
-        if (inhousePart.getInv() < inhousePart.getMinInv()) {
-            bindingResult.rejectValue("inv", "error.inhousePart", "Inventory must not be below the minimum value.");
-
-        } else if (inhousePart.getInv() > inhousePart.getMinInv()) {
-            bindingResult.rejectValue("inv", "error.inhousePart", "Inventory must not exceed maximum value.");
-        }
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("inhousepart", new InhousePart());
+        return "InhousePartForm";
+    }
+    @PostMapping("/add")
+    public String addInhousePart(@Valid @ModelAttribute("inhousepart") InhousePart inhousePart, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("inhousepart", inhousePart);
             return "InhousePartForm";
         }
-        partRepository.save(inhousePart);
-        return "redirect:/parts";
+        partService.save(inhousePart);
+        return "redirect:/parts/list";
     }
-}
+
+    @GetMapping("/showInhousePartFormForUpdate/{partId}")
+    public String showUpdateForm(@PathVariable("partId") Long partId, Model model) {
+        InhousePart inhousePart = (InhousePart) partService.findById(partId);
+        if (inhousePart == null) {
+            throw new IllegalArgumentException("Invalid part Id:" + partId);
+        }
+        model.addAttribute("inhousepart", inhousePart);
+        return "InhousePartForm";
+    }
+
+    @PostMapping("/updateInhousePart")
+    public String saveInhousePart(@ModelAttribute("inhousepart") InhousePart inhousePart) {
+        partService.save(inhousePart);
+        return "redirect:/mainscreen";
+        }
+    }
+

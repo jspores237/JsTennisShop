@@ -1,27 +1,20 @@
 package com.example.demo.domain;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-/**
- *
- *
- *
- *
- */
 @Entity
-@DiscriminatorValue("1")
+@DiscriminatorValue("InhousePart")
 public class InhousePart extends Part{
-    int partId;
 
-    public InhousePart() {
-    }
+    private Long partId; //new (made id private)
 
-    public int getPartId() {
-        return partId;
-    }
+    public InhousePart() {}
 
-    public void setPartId(int partId) {
-        this.partId = partId;
-    }
+    public void setPartId(Long partId) {this.partId = partId;}
+
+    public Long getPartId() {return partId;}
+
+
+    public boolean isInvInvalid() {return this.inv < this.minInv || this.inv > this.maxInv;} //added
+
 }

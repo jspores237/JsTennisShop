@@ -10,16 +10,24 @@
 </head>
 <body>
 <h1>Product Detail</h1>
-<form action="#" th:action="@{/showFormAddProduct}" th:object="${product}" method="POST"}>
+<form th:action="@{/products/updateProduct}" th:object="${product}" method="POST">
     <!-- Add hidden form field to handle update -->
     <p><input type="hidden" th:field="*{id}"/></p>
 
     <p><input type="text" th:field="*{name}" placeholder="Name" class="form-control mb-4 col-4"/></p>
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
 
     <p><input type="text" th:field="*{price}" placeholder= "Price" class="form-control mb-4 col-4"/></p>
-
+    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</p>
 
     <p><input type="text" th:field="*{inv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
+    <p th:if="${#fields.hasErrors('inv')}" th:errors="*{inv}">Inventory Error</p>
+
+    <p><input type="text" th:field="*{minInv}" placeholder="Minimum Inventory" class="form-control mb-4 col-4"/></p>
+    <p th:if="${#fields.hasErrors('minInv')}" th:errors="*{minInv}">Minimum Inventory Error</p>
+
+    <p><input type="text" th:field="*{maxInv}" placeholder="Maximum Inventory" class="form-control mb-4 col-4"/></p>
+    <p th:if="${#fields.hasErrors('maxInv')}" th:errors="*{maxInv}">Maximum Inventory Error</p>
 
     <p>
     <div th:if="${#fields.hasAnyErrors()}">
@@ -45,7 +53,7 @@
         <td th:text="${tempPart.name}">1</td>
         <td th:text="${tempPart.price}">1</td>
         <td th:text="${tempPart.inv}">1</td>
-        <td><a th:href="@{/associatepart(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Add</a>
+        <td><a th:href="@{/products/associatePart(partId=${tempPart.partId}, productID=${product.id})}" class="btn btn-primary btn-sm mb-3">Add</a>
         </td>
     </tr>
     </form>
@@ -65,7 +73,7 @@
             <td th:text="${tempPart.name}">1</td>
             <td th:text="${tempPart.price}">1</td>
             <td th:text="${tempPart.inv}">1</td>
-            <td><a th:href="@{/removepart(partID=${tempPart.id})}"  class="btn btn-primary btn-sm mb-3">Remove</a>
+            <td><a th:href="@{/products/removePart(partId=${tempPart.partId}, productID=${product.id})}"  class="btn btn-primary btn-sm mb-3">Remove</a>
             </td>
         </tr>
         </tbody>

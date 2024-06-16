@@ -45,6 +45,14 @@ G.  Modify the parts to track maximum and minimum inventory by doing the followi
 //Changed database file name to J'sTennisShop.db. Went to application.properties and changed database name accordingly.
 //Lines 100 & 101 Parts.java: Method to ensure inventory levels for parts are between min and max.
 //InhousePartController.java and OutsourcedPartController.java created. Controller maps and handles POST requests for creating and updating InhousePart objects. Validates inventory is between min and max values. Uses BindingResult to manage validation errors (outputs message to user if bad input). Saves valid InhousePart objects to database.
+//Line 54 & 55 InhousePartServiceImpl.java (Note for attempt 2): Added logic for ensuring inventory is between min and max.
+//Lines 37 & 38 AddInhousePartController.java (Note for attempt 2): Added check to see if inventory is between min and max before saving. If inventory is not withing range, error message displayed from BindingResult.
+//Line 18, 24, 30, & 34 InhousePartForm.html (Not for attempt 2): 
+//Line 15 InhousePart.java (Note for attempt 2): Changes id to a private field.
+//Lines 17, 20, 23, 26, 29 & 32 InhousePartForm.html (Note for attempt 2): Outputs correct error message to user.
+//Lines 19, 22, 25, 28, 31 & 34 OutsourcedPartForm.html (Note for attempt 2): Outputs correct error message to user.
+//Lines 45-47 AddProductController.java (Note for attempt 2): added try, catch blocks 
+//Added a ConfirmationController.java to handle the part and product confirmation pages
 
 H.  Add validation for between or at the maximum and minimum fields. The validation must include the following:
 •  Display error messages for low inventory when adding and updating parts if the inventory is less than the minimum number of parts.
@@ -52,6 +60,8 @@ H.  Add validation for between or at the maximum and minimum fields. The validat
 •  Display error messages when adding and updating parts if the inventory is greater than the maximum.
 //Lines 25-29 InhousePartController.java and OutsourcedPartController.java: Additional error messages added if inventory is out of min-max zone.
 //Lines 33-46 EnufPartsValidator.java: for loop to iterate through and return the set of parts associated with a product. The inventory collection is checked to see if inventory decrementing by one would cause it to fall below the minimum. Default constraint violation message disabled (updated with more specific warning message about adding another product).
+//Product.java and Part.java: Modified inventory setter methods to ensure inv value is between the minInv and maxInv values (also that the values are not set to 0, which they kept being changed to in my last submission).
+
 
 I.  Add at least two unit tests for the maximum and minimum fields to the PartTest class in the test package.
 //Lines 104-137 PartTest.java: added getters and setters for minInv and maxInv.

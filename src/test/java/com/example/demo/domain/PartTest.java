@@ -27,22 +27,23 @@ class PartTest {
         partIn=new InhousePart();
         partOut=new OutsourcedPart();
     }
+
     @Test
     void getId() {
         Long idValue=4L;
-        partIn.setId(idValue);
-        assertEquals(partIn.getId(), idValue);
-        partOut.setId(idValue);
-        assertEquals(partOut.getId(), idValue);
+        partIn.setPartId(idValue);
+        assertEquals(partIn.getPartId(), idValue);
+        partOut.setPartId(idValue);
+        assertEquals(partOut.getPartId(), idValue);
     }
 
     @Test
     void setId() {
         Long idValue=4L;
-        partIn.setId(idValue);
-        assertEquals(partIn.getId(), idValue);
-        partOut.setId(idValue);
-        assertEquals(partOut.getId(), idValue);
+        partIn.setPartId(idValue);
+        assertEquals(partIn.getPartId(), idValue);
+        partOut.setPartId(idValue);
+        assertEquals(partOut.getPartId(), idValue);
     }
 
     @Test
@@ -175,21 +176,21 @@ class PartTest {
 
     @Test
     void testEquals() {
-        partIn.setId(1l);
+        partIn.setPartId(1L);
         Part newPartIn=new InhousePart();
-        newPartIn.setId(1l);
+        newPartIn.setPartId(1L);
         assertEquals(partIn,newPartIn);
-        partOut.setId(1l);
+        partOut.setPartId(1L);
         Part newPartOut=new OutsourcedPart();
-        newPartOut.setId(1l);
+        newPartOut.setPartId(1L);
         assertEquals(partOut,newPartOut);
 
     }
 
     @Test
     void testHashCode() {
-        partIn.setId(1l);
-        partOut.setId(1l);
+        partIn.setPartId(1L);
+        partOut.setPartId(1L);
         assertEquals(partIn.hashCode(),partOut.hashCode());
     }
 }

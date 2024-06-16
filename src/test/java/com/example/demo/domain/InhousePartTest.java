@@ -25,14 +25,14 @@ class InhousePartTest {
 
     @Test
     void getPartId() {
-        int idValue=4;
+        long idValue=4;
         ip.setPartId(idValue);
         assertEquals(ip.getPartId(), idValue);
     }
 
     @Test
     void setPartId() {
-        int idValue=4;
+        long idValue=4;
         ip.setPartId(idValue);
         assertEquals(ip.getPartId(), idValue);
     }

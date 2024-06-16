@@ -2,37 +2,44 @@ package com.example.demo.controllers;
 
 import com.example.demo.domain.OutsourcedPart;
 import com.example.demo.repositories.PartRepository;
+import com.example.demo.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/outsourcedpart")
 public class OutsourcedPartController {
 
-    @Autowired
+    private final PartService partService;
     private PartRepository partRepository;
 
-    @PostMapping("/save")
-    public String saveOutsourcedPart(@Valid OutsourcedPart outsourcedPart, BindingResult bindingResult, Model model) {
-        if (!outsourcedPart.isInvValid()) {
-            bindingResult.rejectValue("inv", "error.outsourcedPart", "Inventory must be between Minimum and Maximum values.");
-        }
-        if (outsourcedPart.getInv() < outsourcedPart.getMinInv()) {
-            bindingResult.rejectValue("inv", "error.outsourcedPart", "Inventory must not be below the minimum value.");
+    @Autowired
+    public OutsourcedPartController(PartService partService) {
+        this.partService = partService;
+    }
 
-        } else if (outsourcedPart.getInv() > outsourcedPart.getMinInv()) {
-            bindingResult.rejectValue("inv", "error.outsourcedPart", "Inventory must not exceed maximum value.");
-        }
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("outsourcedpart", outsourcedPart);
+    @GetMapping("/showPartFormForUpdate/{partId}")
+    public String showPartFormForSave(@PathVariable("partId") Long partId, Model model) {
+        OutsourcedPart part = (OutsourcedPart) partService.findById(partId);
+        if (part != null) {
+            model.addAttribute("outsourcedpart", part);
             return "OutsourcedPartForm";
+        } else {
+            return "redirect:/mainscreen";
         }
-        partRepository.save(outsourcedPart);
-        return "redirect:/parts";
+    }
+
+
+    @PostMapping("/updateOutsourcedPart/{partId}")
+    public String saveOutsourcedPart(@Valid @ModelAttribute("outsourcedpart") OutsourcedPart outsourcedPart, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "OutsourcedPartForm";  // Return to the form with error messages
+        }
+        partService.updatePart(outsourcedPart.getPartId(), outsourcedPart);  // Update the part
+        return "redirect:/mainscreen";
     }
 }

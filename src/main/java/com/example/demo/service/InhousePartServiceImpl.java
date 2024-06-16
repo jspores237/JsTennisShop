@@ -6,19 +6,12 @@ import com.example.demo.repositories.InhousePartRepository;
 import com.example.demo.repositories.OutsourcedPartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
-/**
- *
- *
- *
- *
- */
 @Service
 public class InhousePartServiceImpl implements InhousePartService {
-    private InhousePartRepository partRepository;
+    private final InhousePartRepository partRepository; //made final.
 
     @Autowired
     public InhousePartServiceImpl(InhousePartRepository partRepository) {
@@ -31,34 +24,22 @@ public class InhousePartServiceImpl implements InhousePartService {
     }
 
     @Override
-    public InhousePart findById(int theId) {
-        Long theIdl=(long)theId;
-        Optional<InhousePart> result = partRepository.findById(theIdl);
-
-        InhousePart thePart = null;
+    public InhousePart findById(Long theId) {
+        Optional<InhousePart> result = partRepository.findById(theId);
 
         if (result.isPresent()) {
-            thePart = result.get();
+            return result.get();
+        } else {
+            throw new RuntimeException("Did not find part id - " + theId);
         }
-        else {
-            // we didn't find the InhousePart id
-            //throw new RuntimeException("Did not find part id - " + theId);
-            return null;
-        }
-
-        return thePart;
     }
 
     @Override
-    public void save(InhousePart thePart) {
-        partRepository.save(thePart);
-
-    }
+    public void save(InhousePart thePart) {partRepository.save(thePart);}
 
     @Override
-    public void deleteById(int theId) {
-        Long theIdl=(long)theId;
-        partRepository.deleteById(theIdl);
+    public void deleteById(Long theId) {
+        partRepository.deleteById(theId);
     }
 
 }

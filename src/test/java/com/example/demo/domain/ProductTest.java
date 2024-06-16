@@ -23,8 +23,9 @@ class ProductTest {
     Product product;
     @BeforeEach
     public void setUp(){
-        product=new Product();
+        product= new Product();
     }
+
     @Test
     void getId() {
         Long idValue=4L;
@@ -84,7 +85,9 @@ class ProductTest {
     @Test
     void getParts() {
         Part part1 = new OutsourcedPart();
+        part1.setPartId(1L);
         Part part2 = new InhousePart();
+        part2.setPartId(2L);
         Set<Part> myParts= new HashSet<>();
         myParts.add(part1);
         myParts.add(part2);
@@ -95,7 +98,9 @@ class ProductTest {
     @Test
     void setParts() {
         Part part1 = new OutsourcedPart();
+        part1.setPartId(1L);
         Part part2 = new InhousePart();
+        part2.setPartId(2L);
         Set<Part> myParts= new HashSet<>();
         myParts.add(part1);
         myParts.add(part2);
@@ -112,17 +117,17 @@ class ProductTest {
 
     @Test
     void testEquals() {
-        product.setId(1l);
+        product.setId(1L);
         Product newProduct= new Product();
-        newProduct.setId(1l);
+        newProduct.setId(1L);
         assertEquals(product,newProduct);
     }
 
     @Test
     void testHashCode() {
-        product.setId(1l);
+        product.setId(1L);
         Product newProduct= new Product();
-        newProduct.setId(1l);
+        newProduct.setId(1L);
         assertEquals(product.hashCode(),newProduct.hashCode());
     }
 }

@@ -1,22 +1,15 @@
 package com.example.demo.service;
-
 import com.example.demo.domain.OutsourcedPart;
 import com.example.demo.repositories.OutsourcedPartRepository;
+import com.example.demo.service.OutsourcedPartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
-/**
- *
- *
- *
- *
- */
 @Service
-public class OutsourcedPartServiceImpl implements OutsourcedPartService{
-    private OutsourcedPartRepository partRepository;
+public class OutsourcedPartServiceImpl implements OutsourcedPartService {
+    private final OutsourcedPartRepository partRepository;
 
     @Autowired
     public OutsourcedPartServiceImpl(OutsourcedPartRepository partRepository) {
@@ -29,34 +22,38 @@ public class OutsourcedPartServiceImpl implements OutsourcedPartService{
     }
 
     @Override
-    public OutsourcedPart findById(int theId) {
-        Long theIdl=(long)theId;
-        Optional<OutsourcedPart> result = partRepository.findById(theIdl);
+    public OutsourcedPart findById(Long theId) {
+        Optional<OutsourcedPart> result = partRepository.findById(theId);
 
         OutsourcedPart thePart = null;
 
         if (result.isPresent()) {
-            thePart = result.get();
+            return result.get();
+        } else {
+            throw new RuntimeException("Did not find part id - " + theId);
         }
-        else {
-            // we didn't find the OutSourced id
-            //throw new RuntimeException("Did not find part id - " + theId);
-            return null;
-        }
-
-        return thePart;
     }
 
     @Override
     public void save(OutsourcedPart thePart) {
         partRepository.save(thePart);
-
     }
 
     @Override
-    public void deleteById(int theId) {
-        Long theIdl=(long)theId;
-        partRepository.deleteById(theIdl);
+    public void updatePart(Long theId, OutsourcedPart updatedPart) {
+        OutsourcedPart existingPart = findById(theId);
+        if (existingPart != null) {
+            existingPart.setName(updatedPart.getName());
+            existingPart.setMinInv(updatedPart.getMinInv());
+            existingPart.setMaxInv(updatedPart.getMaxInv());
+            existingPart.setInv(updatedPart.getInv());
+            partRepository.save(existingPart);
+        }
+    }
+
+    @Override
+    public void deleteById(Long theId) {
+        partRepository.deleteById(theId);
     }
 
 }

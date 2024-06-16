@@ -29,7 +29,7 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
 
         // Retrieve the existing product if it exists
         if (product.getId() != 0) {
-            Product existingProduct = productService.findById((int) product.getId());
+            Product existingProduct = productService.findById((Long) product.getId());
 
             for (Part part : existingProduct.getParts()) {
                 // Check if the part's inventory after decrementing would fall below the minimum inventory
