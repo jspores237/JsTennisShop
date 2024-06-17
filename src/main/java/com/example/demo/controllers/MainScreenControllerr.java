@@ -48,10 +48,10 @@ public class MainScreenControllerr {
 
     @GetMapping("/showProductFormForUpdate/{productID}")
     public String showProductFormForUpdate(@PathVariable("productID") Long id, Model model) {
-        Product product = productService.findById(id); //id instead of productId?
+        Product product = productService.findById(id);
         if(product != null) {
-        model.addAttribute("product", product);
-        return "productForm";
+            model.addAttribute("product", product);
+            return "productForm";
     } else {
             return "redirect:/mainscreen";
         }
@@ -93,6 +93,21 @@ public class MainScreenControllerr {
             return "OutsourcedPartForm";  // Return to the form with error messages
         }
         partService.save(outsourcedPart);
+        return "redirect:/mainscreen";
+    }
+
+    @GetMapping("/showFormAddProduct")
+    public String showFormAddProduct(Model model) {
+        model.addAttribute("product", new Product());
+        return "productForm";
+    }
+
+    @PostMapping("/products/addProduct")
+    public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "productForm";
+        }
+        productService.save(product);
         return "redirect:/mainscreen";
     }
 }

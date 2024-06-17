@@ -1,14 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Part;
 import com.example.demo.domain.Product;
-import com.example.demo.repositories.PartRepository;
 import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -27,8 +25,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    @Transactional
     public Product findById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        Product product = productRepository.findById(id).orElse(null);
+        if (product != null) {
+            product.getParts().size(); // Force initialization of lazy-loaded parts collection
+        }
+        return product;
     }
 
     @Override

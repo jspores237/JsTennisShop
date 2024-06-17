@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/parts")
@@ -80,7 +79,7 @@ public class AddPartController {
 
 
     @GetMapping("/deletepart")
-    public String deletePart(@RequestParam("partId") Long theId) {
+    public String deletePart(@RequestParam("partId") Long theId, Model model) {
         Part part = partService.findById(theId);
         if (part == null) {
             return "error"; // handle part not found
@@ -90,6 +89,7 @@ public class AddPartController {
             partService.deleteById(theId);
             return "redirect:/confirmationdeletepart";
         } else {
+            model.addAttribute("errorMessage", "Part cannot be deleted as it is used in a product.");
             return "negativeerror";
         }
     }

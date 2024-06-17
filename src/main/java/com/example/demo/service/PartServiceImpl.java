@@ -2,12 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.domain.OutsourcedPart;
 import com.example.demo.domain.Part;
-import com.example.demo.domain.Product;
 import com.example.demo.repositories.PartRepository;
-import com.example.demo.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,21 +41,36 @@ public class PartServiceImpl implements PartService{
     }
 
     @Override
+    @Transactional
     public Part findById(Long partId) {
-        return partRepository.findById(partId).orElse(null);
+        Optional<Part> partOpt = partRepository.findById(partId);
+        if (partOpt.isPresent()) {
+            Part part = partOpt.get();
+            part.getProducts().size(); // Force initialization
+            return part;
+        }
+        return null;
     }
 
     @Override
+    @Transactional
     public void save(Part part) {
             partRepository.save(part);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long partId) {
-        partRepository.deleteById(partId);
+        Part part = findById(partId);
+        if (part != null && part.getProducts().isEmpty()) {
+            partRepository.deleteById(partId);
+        } else {
+            throw new RuntimeException("Part cannot be deleted if used in a product.");
+        }
     }
 
     @Override
+    @Transactional
     public void updatePart(Long partId, Part updatedPart) {
         Part existingPart = findById(partId);
         if (existingPart == null) {

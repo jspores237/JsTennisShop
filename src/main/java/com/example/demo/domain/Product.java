@@ -1,8 +1,5 @@
 package com.example.demo.domain;
 
-import com.example.demo.validators.ValidEnufParts;
-import com.example.demo.validators.ValidProductPrice;
-
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;

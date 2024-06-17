@@ -42,4 +42,15 @@ public class OutsourcedPartController {
         partService.updatePart(outsourcedPart.getPartId(), outsourcedPart);  // Update the part
         return "redirect:/mainscreen";
     }
+
+    @PostMapping("/deleteOutsourcedPart/{partId}")
+    public String deleteOutsourcedPart(@PathVariable("partId") Long partId) {
+        try {
+            partService.deleteById(partId);
+            return "redirect:/mainscreen";
+        } catch (RuntimeException e) {
+            // Handle the error, perhaps redirect to an error page or display a message
+            return "redirect:/error";
+        }
+    }
 }

@@ -47,5 +47,16 @@ public class InhousePartController {
         partService.save(inhousePart);
         return "redirect:/mainscreen";
         }
+
+    @PostMapping("/deleteInhousePart/{partId}")
+    public String deleteInhousePart(@PathVariable("partId") Long partId) {
+        try {
+            partService.deleteById(partId);
+            return "redirect:/mainscreen";
+        } catch (RuntimeException e) {
+            // Handle the error, perhaps redirect to an error page or display a message
+            return "redirect:/error";
+        }
     }
+}
 

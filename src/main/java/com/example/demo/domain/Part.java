@@ -1,15 +1,10 @@
 package com.example.demo.domain;
 
-import com.example.demo.validators.ValidInventory;
-import com.example.demo.validators.ValidDeletePart;
-import com.example.demo.validators.ValidProductPrice;
-
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,6 +43,7 @@ public class Part implements Serializable {
     @Min(value = 0, message = "Inventory value must be at least 0!")
     @Column(name = "INV")
     int inv;
+
 
     @ManyToMany(mappedBy = "parts")
     private Set<Product> products = new HashSet<>();

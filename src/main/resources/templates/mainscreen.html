@@ -60,7 +60,7 @@
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
     <tr>
-        <th>Company Name</th>
+        <th>Company Name/Machine ID</th>
         <th>Name</th>
         <th>Price</th>
         <th>Inventory</th>
@@ -69,7 +69,7 @@
     </thead>
     <tbody>
     <tr th:each="part : ${parts}">
-        <td th:text="${part.companyName}">Company Name</td>
+        <td th:text="${part.getClass().getSimpleName() == 'OutsourcedPart' ? part.companyName : part.machineId}"></td>
         <td th:text="${part.name}">Part Name</td>
         <td th:text="${part.price}">Price</td>
         <td th:text="${part.inv}">Inventory</td>
@@ -97,7 +97,7 @@
     }
 </script>
 <br><br>
-<a th:href="@{/showProductFormForAdd}" class="btn btn-primary btn-sm mb-3">Add Racket</a>
+<a th:href="@{/products/showFormAddProduct}" class="btn btn-primary btn-sm mb-3">Add Racket</a>
 <table class="table table-bordered table-striped">
     <thead class="thead-dark">
     <tr>
