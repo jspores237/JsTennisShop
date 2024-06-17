@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Project: demoDarbyFrameworks2-master
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PartTest {
     Part partIn;
     Part partOut;
+
     @BeforeEach
     void setUp() {
         partIn=new InhousePart();
@@ -192,5 +194,31 @@ class PartTest {
         partIn.setPartId(1L);
         partOut.setPartId(1L);
         assertEquals(partIn.hashCode(),partOut.hashCode());
+    }
+
+    @Test
+    void setMinInvShouldThrowExceptionWhenLessThanZero() {
+        assertThrows(IllegalArgumentException.class, () -> partIn.setMinInv(-1));
+        assertThrows(IllegalArgumentException.class, () -> partOut.setMinInv(-1));
+    }
+
+    @Test
+    void setMaxInvShouldThrowExceptionWhenLessThanMinInv() {
+        partIn.setMinInv(5);
+        partOut.setMinInv(5);
+        assertThrows(IllegalArgumentException.class, () -> partIn.setMaxInv(4));
+        assertThrows(IllegalArgumentException.class, () -> partOut.setMaxInv(4));
+    }
+
+    @Test
+    void setInvShouldThrowExceptionWhenLessThanMinInvOrGreaterThanMaxInv() {
+        partIn.setMinInv(5);
+        partIn.setMaxInv(10);
+        partOut.setMinInv(5);
+        partOut.setMaxInv(10);
+        assertThrows(IllegalArgumentException.class, () -> partIn.setInv(4));
+        assertThrows(IllegalArgumentException.class, () -> partIn.setInv(11));
+        assertThrows(IllegalArgumentException.class, () -> partOut.setInv(4));
+        assertThrows(IllegalArgumentException.class, () -> partOut.setInv(11));
     }
 }
