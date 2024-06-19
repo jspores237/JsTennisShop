@@ -25,7 +25,7 @@ public class Part implements Serializable {
     private String name;
 
     @NotNull(message = "A price is required!")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Price value must be positive!") //changed to DecimalMin
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price value must be positive!")
     @Column(name = "PRICE")
     double price;
 
@@ -44,7 +44,6 @@ public class Part implements Serializable {
     @Column(name = "INV")
     int inv;
 
-
     @ManyToMany(mappedBy = "parts")
     private Set<Product> products = new HashSet<>();
 
@@ -58,37 +57,30 @@ public class Part implements Serializable {
         setInv(inv);
     }
 
-    public Long getPartId() {return partId;}
+    public Long getPartId() { return partId; }
 
-    public void setPartId(Long partId) {
-        this.partId = partId;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public double getPrice() {
-        return price;
-    }
-    public void setPrice(double price) {this.price = price;}
+    public void setPartId(Long partId) { this.partId = partId; }
 
-    public int getInv() {return inv;}
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
+
+    public double getPrice() { return price; }
+
+    public void setPrice(double price) { this.price = price; }
+
+    public int getInv() { return inv; }
 
     public void setInv(int inv) {
-        System.out.println("Setting inv: " + inv + ", minInv: " + this.minInv + ", maxInv: " + this.maxInv);
         if (this.minInv != 0 && this.maxInv != 0 && (inv < this.minInv || inv > this.maxInv)) {
             throw new IllegalArgumentException("Inventory must be between min and max values.");
         }
         this.inv = inv;
     }
 
-    public int getMinInv() {
-        return minInv;
-    }
+    public int getMinInv() { return minInv; }
+
     public void setMinInv(int minInv) {
-        System.out.println("Setting minInv: " + minInv);
         if (minInv < 0) {
             throw new IllegalArgumentException("Minimum inventory cannot be less than 0!");
         }
@@ -98,45 +90,35 @@ public class Part implements Serializable {
         this.minInv = minInv;
     }
 
-    public int getMaxInv() {
-        return maxInv;
-    }
+    public int getMaxInv() { return maxInv; }
 
     public void setMaxInv(int maxInv) {
-        System.out.println("Setting maxInv: " + maxInv);
         if (this.minInv != 0 && maxInv < this.minInv) {
             throw new IllegalArgumentException("Maximum inventory cannot be less than minimum inventory!");
         }
         this.maxInv = maxInv;
     }
 
-    public Set<Product> getProducts() {
-        return products;
-    }
+    public Set<Product> getProducts() { return products; }
 
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-
-    public boolean isInvInvalid() {
-        return this.inv < this.minInv || this.inv > this.maxInv;
-    }
+    public void setProducts(Set<Product> products) { this.products = products; }
 
     @Override
-    public String toString(){
-        return this.name;
-    }
+    public String toString() { return this.name; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Part part = (Part) o;
-        return partId.equals(part.partId);
+        return Objects.equals(partId, part.partId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(partId); //changed to hash code and added null check
+        int result = 17;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (partId != null ? partId.hashCode() : 0);
+        return result;
     }
 }

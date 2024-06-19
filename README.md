@@ -54,6 +54,7 @@ G.  Modify the parts to track maximum and minimum inventory by doing the followi
 //Lines 45-47 AddProductController.java (Note for attempt 2): added try, catch blocks 
 //Added a ConfirmationController.java to handle the part and product confirmation pages
 //Renamed db file in application.properties to "jdbc:h2:file:~/JsTennisStoreNew.db" to allow use for other users
+//Modified hash code method in test to ensure it accounts for null id
 
 H.  Add validation for between or at the maximum and minimum fields. The validation must include the following:
 •  Display error messages for low inventory when adding and updating parts if the inventory is less than the minimum number of parts.

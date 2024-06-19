@@ -84,28 +84,34 @@ class ProductTest {
 
     @Test
     void getParts() {
-        Part part1 = new OutsourcedPart();
+        product.setId(1L); // Set ID to avoid NullPointerException
+
+        Part part1 = new InhousePart();
         part1.setPartId(1L);
-        Part part2 = new InhousePart();
+        Part part2 = new OutsourcedPart();
         part2.setPartId(2L);
-        Set<Part> myParts= new HashSet<>();
-        myParts.add(part1);
-        myParts.add(part2);
-        product.setParts(myParts);
-        assertEquals(myParts,product.getParts());
+        Set<Part> parts = new HashSet<>();
+        parts.add(part1);
+        parts.add(part2);
+
+        product.setParts(parts);
+        assertEquals(parts, product.getParts());
     }
 
     @Test
     void setParts() {
-        Part part1 = new OutsourcedPart();
+        product.setId(1L); // Set ID to avoid NullPointerException
+
+        Part part1 = new InhousePart();
         part1.setPartId(1L);
-        Part part2 = new InhousePart();
+        Part part2 = new OutsourcedPart();
         part2.setPartId(2L);
-        Set<Part> myParts= new HashSet<>();
-        myParts.add(part1);
-        myParts.add(part2);
-        product.setParts(myParts);
-        assertEquals(myParts,product.getParts());
+        Set<Part> parts = new HashSet<>();
+        parts.add(part1);
+        parts.add(part2);
+
+        product.setParts(parts);
+        assertEquals(parts, product.getParts());
     }
 
     @Test
